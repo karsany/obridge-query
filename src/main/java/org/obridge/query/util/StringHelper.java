@@ -22,11 +22,11 @@
  *
  */
 
-package org.obridge.query;
+package org.obridge.query.util;
 
 import org.apache.commons.lang3.StringUtils;
 
-final class StringHelper {
+public final class StringHelper {
 
     private StringHelper() {
     }

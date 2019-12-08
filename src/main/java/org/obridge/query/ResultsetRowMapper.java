@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class ResultSetExtractor<T> {
+class ResultsetRowMapper<T> {
     private final Class<T> clazz;
 
-    public ResultSetExtractor(Class<T> clazz) {
+    public ResultsetRowMapper(Class<T> clazz) {
         this.clazz = clazz;
     }
 

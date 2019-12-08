@@ -1,4 +1,4 @@
-package org.obridge.query;
+package org.obridge.query.interfaces;
 
 public interface JsonString {
 

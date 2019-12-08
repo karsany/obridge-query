@@ -1,5 +1,8 @@
 package org.obridge.query;
 
+import org.obridge.query.annotation.Bind;
+import org.obridge.query.interfaces.JsonString;
+
 import java.time.LocalDate;
 import java.util.List;
 

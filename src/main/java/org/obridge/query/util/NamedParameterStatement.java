@@ -1,4 +1,16 @@
-package org.obridge.query;
+/*
+   Copyright 2011 Monits
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+       http://www.apache.org/licenses/LICENSE-2.0
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+package org.obridge.query.util;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -6,9 +18,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * NamedParameterStatement.java
+ * <p>
+ * This class wraps around a {@link PreparedStatement} and allows the
+ * programmer to set parameters by name instead
+ * of by index.  This eliminates any confusion as to which parameter index
+ * represents what.  This also means that
+ * rearranging the SQL statement or adding a parameter doesn't involve
+ * renumbering your indices.
+ * <p>
+ * The original code was modified to wrap other methods of {@link PreparedStatement}
+ *
+ * @author adam_crume
+ * @link http://www.javaworld.com/
+ */
 public class NamedParameterStatement {
 
-    /** The statement this object is wrapping. */
+    /**
+     * The statement this object is wrapping.
+     */
     private final PreparedStatement statement;
 
     /**
@@ -20,6 +49,7 @@ public class NamedParameterStatement {
      * Creates a NamedParameterStatement.  Wraps a call to
      * c.{@link Connection#prepareStatement(java.lang.String)
      * prepareStatement}.
+     *
      * @param connection the database connection
      * @param query      the parameterized query
      * @throws SQLException if the statement could not be created
@@ -38,11 +68,13 @@ public class NamedParameterStatement {
      * parsed query is returned.  DO NOT CALL FROM CLIENT CODE.  This
      * method is non-private so JUnit code can
      * test it.
+     *
      * @param query    query to parse
      * @param indexMap map to hold parameter-index mappings
      * @return the parsed query
      */
-    /*default*/ static final String parse(final String query, final Map<String, int[]> indexMap) {
+    /*default*/
+    static final String parse(final String query, final Map<String, int[]> indexMap) {
         final Map<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
         final int length = query.length();
         final StringBuilder parsedQuery = new StringBuilder(length);
@@ -87,8 +119,9 @@ public class NamedParameterStatement {
 
     /**
      * Parses a name from the given query string starting at the given position.
+     *
      * @param query The query string from which to parse the parameter name
-     * @param pos The position at which it was detected a parameter starts
+     * @param pos   The position at which it was detected a parameter starts
      * @return The name of the parameter parsed
      */
     private static String parseParameterName(final String query, final int pos) {
@@ -102,7 +135,8 @@ public class NamedParameterStatement {
 
     /**
      * Moves all values from a map having a list of ints, to one having an array of ints
-     * @param inMap The input map, having a list of ints for values.
+     *
+     * @param inMap  The input map, having a list of ints for values.
      * @param outMap The output map, on which to put the same values as an array of ints.
      */
     private static void toIntArrayMap(final Map<String, List<Integer>> inMap,
@@ -113,7 +147,7 @@ public class NamedParameterStatement {
 
             final int[] indexes = new int[list.size()];
             int i = 0;
-            for (Integer integer: list) {
+            for (Integer integer : list) {
                 indexes[i++] = integer.intValue();
             }
 
@@ -124,6 +158,7 @@ public class NamedParameterStatement {
 
     /**
      * Returns the indexes for a parameter.
+     *
      * @param name parameter name
      * @return parameter indexes
      * @throws IllegalArgumentException if the parameter does not exist
@@ -139,9 +174,10 @@ public class NamedParameterStatement {
 
     /**
      * Sets a parameter.
+     *
      * @param name  parameter name
      * @param value parameter value
-     * @throws SQLException if an error occurred
+     * @throws SQLException             if an error occurred
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setObject(int, java.lang.Object)
      */
@@ -154,9 +190,10 @@ public class NamedParameterStatement {
 
     /**
      * Sets a parameter.
+     *
      * @param name  parameter name
      * @param value parameter value
-     * @throws SQLException if an error occurred
+     * @throws SQLException             if an error occurred
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setString(int, java.lang.String)
      */
@@ -169,9 +206,10 @@ public class NamedParameterStatement {
 
     /**
      * Sets a parameter.
+     *
      * @param name  parameter name
      * @param value parameter value
-     * @throws SQLException if an error occurred
+     * @throws SQLException             if an error occurred
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setInt(int, int)
      */
@@ -184,9 +222,10 @@ public class NamedParameterStatement {
 
     /**
      * Sets a parameter.
+     *
      * @param name  parameter name
      * @param value parameter value
-     * @throws SQLException if an error occurred
+     * @throws SQLException             if an error occurred
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setInt(int, int)
      */
@@ -199,9 +238,10 @@ public class NamedParameterStatement {
 
     /**
      * Sets a parameter.
+     *
      * @param name  parameter name
      * @param value parameter value
-     * @throws SQLException if an error occurred
+     * @throws SQLException             if an error occurred
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setTimestamp(int, java.sql.Timestamp)
      */
@@ -214,9 +254,10 @@ public class NamedParameterStatement {
 
     /**
      * Sets a parameter.
+     *
      * @param name  parameter name
      * @param value parameter value
-     * @throws SQLException if an error occurred
+     * @throws SQLException             if an error occurred
      * @throws IllegalArgumentException if the parameter does not exist
      * @see PreparedStatement#setTimestamp(int, java.sql.Timestamp)
      */
@@ -229,6 +270,7 @@ public class NamedParameterStatement {
 
     /**
      * Returns the underlying statement.
+     *
      * @return the statement
      */
     public PreparedStatement getStatement() {
@@ -237,6 +279,7 @@ public class NamedParameterStatement {
 
     /**
      * Executes the statement.
+     *
      * @return true if the first result is a {@link ResultSet}
      * @throws SQLException if an error occurred
      * @see PreparedStatement#execute()
@@ -247,6 +290,7 @@ public class NamedParameterStatement {
 
     /**
      * Executes the statement, which must be a query.
+     *
      * @return the query results
      * @throws SQLException if an error occurred
      * @see PreparedStatement#executeQuery()
@@ -259,6 +303,7 @@ public class NamedParameterStatement {
      * Executes the statement, which must be an SQL INSERT, UPDATE or DELETE
      * statement;
      * or an SQL statement that returns nothing, such as a DDL statement.
+     *
      * @return number of rows affected
      * @throws SQLException if an error occurred
      * @see PreparedStatement#executeUpdate()
@@ -269,6 +314,7 @@ public class NamedParameterStatement {
 
     /**
      * Closes the statement.
+     *
      * @throws SQLException if an error occurred
      * @see Statement#close()
      */
@@ -278,6 +324,7 @@ public class NamedParameterStatement {
 
     /**
      * Adds the current set of parameters as a batch entry.
+     *
      * @throws SQLException if something went wrong
      */
     public void addBatch() throws SQLException {
@@ -286,8 +333,9 @@ public class NamedParameterStatement {
 
     /**
      * Executes all of the batched statements.
-     *
+     * <p>
      * See {@link Statement#executeBatch()} for details.
+     *
      * @return update counts for each statement
      * @throws SQLException if something went wrong
      */

@@ -1,4 +1,6 @@
-package org.obridge.query;
+package org.obridge.query.util;
+
+import org.obridge.query.interfaces.JsonString;
 
 import java.util.List;
 import java.util.stream.Collectors;

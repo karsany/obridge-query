@@ -1,12 +1,15 @@
 package org.obridge.query;
 
+import org.obridge.query.annotation.Bind;
+import org.obridge.query.util.NamedParameterStatement;
+
 import javax.sql.DataSource;
 import java.lang.reflect.*;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 
-public class AutoServiceInvocationHandler implements InvocationHandler {
+class AutoServiceInvocationHandler implements InvocationHandler {
 
     private final DataSource ds;
     private final Class clazz;

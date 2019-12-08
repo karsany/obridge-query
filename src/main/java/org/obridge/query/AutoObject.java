@@ -1,5 +1,7 @@
 package org.obridge.query;
 
+import org.obridge.query.util.StringHelper;
+
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +34,7 @@ public class AutoObject<T> {
 
                 while (resultSet.next()) {
 
-                    T row = new ResultSetExtractor<T>(clazz).getObject(methodColumnNameMap, resultSet);
+                    T row = new ResultsetRowMapper<T>(clazz).getObject(methodColumnNameMap, resultSet);
 
                     this.list.add(row);
 

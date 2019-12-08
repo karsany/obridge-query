@@ -1,4 +1,4 @@
-package org.obridge.query;
+package org.obridge.query.annotation;
 
 import java.lang.annotation.*;
 

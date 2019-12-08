@@ -6,6 +6,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
+import org.obridge.query.util.JsonList;
 
 import java.sql.SQLException;
 import java.util.List;
