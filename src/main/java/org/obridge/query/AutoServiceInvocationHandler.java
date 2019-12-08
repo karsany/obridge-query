@@ -22,7 +22,7 @@ class AutoServiceInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         String sqlFileName = clazz.getSimpleName() + "_" + method.getName().substring(0, 1).toUpperCase() + method.getName().substring(1) + ".sql";
-        final String query = new Scanner(this.getClass().getResourceAsStream(sqlFileName), "UTF-8").useDelimiter("\\A").next();
+        final String query = new Scanner(clazz.getResourceAsStream(sqlFileName), "UTF-8").useDelimiter("\\A").next();
 
         boolean isList;
 

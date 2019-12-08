@@ -73,6 +73,13 @@
                 </executions>
             </plugin>
         </plugins>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-webdav-jackrabbit</artifactId>
+                <version>3.0.0</version>
+            </extension>
+        </extensions>
     </build>
 
     <distributionManagement>
@@ -82,5 +89,5 @@
             <url>dav:https://karsany.dynv6.net/dav/maven/</url>
         </repository>
     </distributionManagement>
-    
+
 </project>
