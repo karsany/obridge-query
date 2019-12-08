@@ -1,4 +1,4 @@
-package hu.karsany.dbobject.conversion;
+package org.obridge.query.conversion;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;

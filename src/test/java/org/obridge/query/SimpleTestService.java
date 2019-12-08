@@ -1,4 +1,4 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
 import java.time.LocalDate;
 import java.util.List;

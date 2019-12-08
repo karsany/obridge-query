@@ -1,4 +1,4 @@
-package hu.karsany.dbobject.conversion;
+package org.obridge.query.conversion;
 
 public class ConverterNotFoundException extends Throwable {
     public ConverterNotFoundException(String msg) {

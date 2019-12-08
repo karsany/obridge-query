@@ -1,4 +1,4 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
 import java.sql.*;
 import java.util.HashMap;

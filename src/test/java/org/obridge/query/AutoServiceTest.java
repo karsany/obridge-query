@@ -1,7 +1,7 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
-import hu.karsany.dbobject.conversion.Converters;
-import hu.karsany.dbobject.conversion.StringPatternToLocalDateConverter;
+import org.obridge.query.conversion.Converters;
+import org.obridge.query.conversion.StringPatternToLocalDateConverter;
 import oracle.jdbc.pool.OracleDataSource;
 import org.json.JSONObject;
 import org.junit.Assert;

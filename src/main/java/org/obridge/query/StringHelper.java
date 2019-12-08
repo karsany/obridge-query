@@ -22,7 +22,7 @@
  *
  */
 
-package hu.karsany.dbobject;
+package org.obridge.query;
 
 import org.apache.commons.lang3.StringUtils;
 

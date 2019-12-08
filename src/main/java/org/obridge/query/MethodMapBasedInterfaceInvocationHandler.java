@@ -1,4 +1,4 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

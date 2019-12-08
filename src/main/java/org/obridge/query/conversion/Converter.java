@@ -1,4 +1,4 @@
-package hu.karsany.dbobject.conversion;
+package org.obridge.query.conversion;
 
 public interface Converter<F, T> {
 

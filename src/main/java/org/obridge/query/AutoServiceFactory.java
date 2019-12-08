@@ -1,4 +1,4 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Proxy;

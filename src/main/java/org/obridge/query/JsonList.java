@@ -1,4 +1,4 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
 import java.util.List;
 import java.util.stream.Collectors;

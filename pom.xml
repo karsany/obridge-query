@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>hu.karsany.dbobject</groupId>
-    <artifactId>dbobject</artifactId>
+    <groupId>org.obridge</groupId>
+    <artifactId>obridge-query</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>dbobject</name>
+    <name>obridge-query</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,7 +30,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.oracle.ojdbc/ojdbc8 -->
         <dependency>
             <groupId>com.oracle.ojdbc</groupId>
             <artifactId>ojdbc8</artifactId>
@@ -38,15 +37,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
             <scope>test</scope>
         </dependency>
-
-
 
     </dependencies>
 
@@ -79,5 +75,12 @@
         </plugins>
     </build>
 
-
+    <distributionManagement>
+        <repository>
+            <id>release-karsany</id>
+            <name>Home Repository</name>
+            <url>dav:https://karsany.dynv6.net/dav/maven/</url>
+        </repository>
+    </distributionManagement>
+    
 </project>

@@ -1,4 +1,4 @@
-package hu.karsany.dbobject.conversion;
+package org.obridge.query.conversion;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

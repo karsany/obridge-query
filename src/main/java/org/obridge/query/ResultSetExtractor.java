@@ -1,7 +1,7 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
-import hu.karsany.dbobject.conversion.ConverterNotFoundException;
-import hu.karsany.dbobject.conversion.Converters;
+import org.obridge.query.conversion.ConverterNotFoundException;
+import org.obridge.query.conversion.Converters;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;

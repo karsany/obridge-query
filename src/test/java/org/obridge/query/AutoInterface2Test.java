@@ -1,7 +1,7 @@
-package hu.karsany.dbobject;
+package org.obridge.query;
 
-import hu.karsany.dbobject.conversion.Converter;
-import hu.karsany.dbobject.conversion.Converters;
+import org.obridge.query.conversion.Converter;
+import org.obridge.query.conversion.Converters;
 import oracle.jdbc.pool.OracleDataSource;
 import oracle.sql.CLOB;
 import org.junit.Test;
