@@ -21,14 +21,18 @@ public class AutoInterfaceTest {
         OracleDataSource ods = new OracleDataSource();
         ods.setURL("jdbc:oracle:thin:obridge/obridge@localhost:1521:xe");
         final Connection connection = ods.getConnection();
-        final PreparedStatement preparedStatement = connection.prepareStatement("Select id,\n" +
+        final String sql = "Select id,\n" +
                 "       'HELLO' || rownum As name,\n" +
                 "       Sysdate As current_date, '2011-11-11' from_text_date, \n" +
                 "       Cursor (Select q.id || 'ABCD' || rownum As description, rownum as sub_id\n" +
                 "                 From dual\n" +
                 "               Connect By rownum < 4) As embedded_object\n" +
                 "  From (select rownum as id from dual\n" +
-                "Connect By rownum < 11) q\n");
+                "Connect By rownum < 11) q\n";
+
+        System.out.println(sql);
+
+        final PreparedStatement preparedStatement = connection.prepareStatement(sql);
         final ResultSet resultSet = preparedStatement.executeQuery();
 
 
@@ -45,6 +49,7 @@ public class AutoInterfaceTest {
 
         System.out.println(ugyfelek);
 
+        System.out.println(customer.toJson());
 
     }
 
@@ -60,12 +65,16 @@ public class AutoInterfaceTest {
         LocalDate fromTextDate();
 
         List<Properties> getEmbeddedObject();
+
+        String toJson();
     }
 
     public interface Properties {
         String getDescription();
 
         Integer getSubId();
+
+        String toJson();
     }
 
 

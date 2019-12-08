@@ -59,6 +59,14 @@ class ResultSetExtractor<T> {
                     );
         }
 
-        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{clazz}, new MethodMapBasedInterfaceInvocationHandler(methodMap));
+        final T t =
+                (T) Proxy
+                        .newProxyInstance(
+                                this.getClass().getClassLoader(),
+                                new Class[]{clazz},
+                                new MethodMapBasedInterfaceInvocationHandler(methodMap)
+                        );
+
+        return t;
     }
 }
