@@ -1,12 +1,9 @@
 package hu.karsany.dbobject;
 
 import javax.sql.DataSource;
-import java.io.InputStream;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.Scanner;
 
 public class AutoServiceInvocationHandler implements InvocationHandler {
@@ -24,13 +21,36 @@ public class AutoServiceInvocationHandler implements InvocationHandler {
         String sqlFileName = clazz.getSimpleName() + "_" + method.getName().substring(0, 1).toUpperCase() + method.getName().substring(1) + ".sql";
         final String query = new Scanner(this.getClass().getResourceAsStream(sqlFileName), "UTF-8").useDelimiter("\\A").next();
 
-        Class c = (Class) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+        boolean isList;
 
-        try (Connection conn = ds.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement(query)) {
-                return new AutoObject<>(c, ps.executeQuery()).getList();
-            }
+        Class c;
+        final Class<?> returnType = method.getReturnType();
+
+        if (returnType.equals(List.class)) {
+            final Type genericReturnType = method.getGenericReturnType();
+            c = (Class) ((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
+            isList = true;
+        } else {
+            c = returnType;
+            isList = false;
         }
 
+
+        try (Connection conn = ds.getConnection()) {
+
+            final NamedParameterStatement namedParameterStatement = new NamedParameterStatement(conn, query);
+
+            int i = 0;
+            for (Parameter parameter : method.getParameters()) {
+                for (Bind bind : parameter.getAnnotationsByType(Bind.class)) {
+                    namedParameterStatement.setObject(bind.value(), args[i]);
+                }
+                i++;
+            }
+
+
+            final List list = new AutoObject<>(c, namedParameterStatement.executeQuery()).getList();
+            return isList ? list : (list.size() > 0 ? list.get(0) : null);
+        }
     }
 }

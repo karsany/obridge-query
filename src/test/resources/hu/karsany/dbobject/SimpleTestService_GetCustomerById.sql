@@ -1,0 +1,1 @@
+select :id as id, 'TESZT' || :id as name, sysdate as current_date, '2011-11-11' as from_text_date from dual
