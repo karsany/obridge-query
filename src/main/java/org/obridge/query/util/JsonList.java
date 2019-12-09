@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 public class JsonList implements JsonString {
 
     private final List<? extends JsonString> list;
+
     private final String name;
 
     public JsonList(List<? extends JsonString> list, String name) {
@@ -15,10 +16,22 @@ public class JsonList implements JsonString {
         this.name = name;
     }
 
+    public JsonList(List<? extends JsonString> list) {
+        this.list = list;
+        this.name = null;
+    }
+
+
     @Override
     public String toJson() {
-        return "{ \"" + name + "\": " + "[" +
-                list.stream().map(o -> ((JsonString) o).toJson()).collect(Collectors.joining(", "))
-                + "] }";
+        if (name == null) {
+            return "[" +
+                    list.stream().map(o -> ((JsonString) o).toJson()).collect(Collectors.joining(", "))
+                    + "]";
+        } else {
+            return "{ \"" + name + "\": " + "[" +
+                    list.stream().map(o -> ((JsonString) o).toJson()).collect(Collectors.joining(", "))
+                    + "] }";
+        }
     }
 }

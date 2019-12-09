@@ -1,10 +1,11 @@
 package org.obridge.query;
 
-import org.obridge.query.conversion.Converters;
-import org.obridge.query.conversion.StringPatternToLocalDateConverter;
 import oracle.jdbc.pool.OracleDataSource;
 import org.junit.Assert;
 import org.junit.Test;
+import org.obridge.query.conversion.Converters;
+import org.obridge.query.conversion.StringPatternToLocalDateConverter;
+import org.obridge.query.interfaces.JsonString;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -53,7 +54,7 @@ public class AutoInterfaceTest {
 
     }
 
-    public interface Customer {
+    public interface Customer extends JsonString {
         Integer getId();
 
         String getName();
@@ -66,15 +67,13 @@ public class AutoInterfaceTest {
 
         List<Properties> getEmbeddedObject();
 
-        String toJson();
     }
 
-    public interface Properties {
+    public interface Properties extends JsonString {
         String getDescription();
 
         Integer getSubId();
 
-        String toJson();
     }
 
 
