@@ -23,7 +23,7 @@ public interface SimpleTestService {
 
         LocalDate fromTextDate();
 
-        List<AutoInterfaceTest.Properties> getEmbeddedObject();
+        List<Properties> getEmbeddedObject();
 
     }
 
