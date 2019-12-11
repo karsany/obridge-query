@@ -11,6 +11,7 @@ public final class Converters {
 
     static {
         Converters.register(new BigDecimalToIntegerConverter());
+        Converters.register(new LongToIntegerConverter());
         Converters.register(new TimestampToLocalDateConverter());
     }
 

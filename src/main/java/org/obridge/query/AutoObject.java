@@ -97,7 +97,9 @@ public class AutoObject<T> {
         this.columnNames.clear();
 
         for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-            columnNames.add(resultSet.getMetaData().getColumnName(i));
+            columnNames.add(resultSet.getMetaData().getColumnLabel(i));
         }
+
+        
     }
 }
