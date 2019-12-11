@@ -1,13 +1,13 @@
 package org.obridge.query;
 
 import org.obridge.query.annotation.Bind;
+import org.obridge.query.annotation.QuerySource;
 import org.obridge.query.util.NamedParameterStatement;
 
 import javax.sql.DataSource;
 import java.lang.reflect.*;
 import java.sql.Connection;
 import java.util.List;
-import java.util.Scanner;
 
 class AutoServiceInvocationHandler implements InvocationHandler {
 
@@ -21,8 +21,15 @@ class AutoServiceInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        String sqlFileName = clazz.getSimpleName() + "_" + method.getName().substring(0, 1).toUpperCase() + method.getName().substring(1) + ".sql";
-        final String query = new Scanner(clazz.getResourceAsStream(sqlFileName), "UTF-8").useDelimiter("\\A").next();
+
+        QuerySource annotation = method.getAnnotation(QuerySource.class);
+
+        String query;
+        if (annotation == null) {
+            query = new ResourceFileQuery().sql(method);
+        } else {
+            query = annotation.value().newInstance().sql(method);
+        }
 
         boolean isList;
 
