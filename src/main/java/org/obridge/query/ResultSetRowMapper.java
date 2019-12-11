@@ -12,10 +12,10 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class ResultsetRowMapper<T> {
+class ResultSetRowMapper<T> {
     private final Class<T> clazz;
 
-    public ResultsetRowMapper(Class<T> clazz) {
+    public ResultSetRowMapper(Class<T> clazz) {
         this.clazz = clazz;
     }
 
@@ -37,7 +37,7 @@ class ResultsetRowMapper<T> {
                 final ParameterizedType returnType = (ParameterizedType) genericReturnType;
                 final Type actualTypeArgument = returnType.getActualTypeArguments()[0];
 
-                value = new AutoObject((Class) actualTypeArgument, (ResultSet) value).getList();
+                value = new AutoObject<>((Class<?>) actualTypeArgument, (ResultSet) value).getList();
 
             } else {
                 // convert

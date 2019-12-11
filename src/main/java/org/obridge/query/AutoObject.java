@@ -34,7 +34,7 @@ public class AutoObject<T> {
 
                 while (resultSet.next()) {
 
-                    T row = new ResultsetRowMapper<T>(clazz).getObject(methodColumnNameMap, resultSet);
+                    T row = new ResultSetRowMapper<T>(clazz).getObject(methodColumnNameMap, resultSet);
 
                     this.list.add(row);
 
