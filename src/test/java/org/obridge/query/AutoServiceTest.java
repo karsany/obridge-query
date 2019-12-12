@@ -6,7 +6,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
-import org.obridge.query.util.JsonList;
+import org.obridge.query.util.JsonCollection;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +29,7 @@ public class AutoServiceTest {
 
         // Then : A szolgáltatás az elvárt eredményeket produkálja
         Assert.assertEquals(10, allCustomers.size());
-        System.out.println(pretty(new JsonList(allCustomers, "customers").toJson()));
+        System.out.println(pretty(new JsonCollection(allCustomers, "customers").toJson()));
 
     }
 

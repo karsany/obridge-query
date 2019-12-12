@@ -2,7 +2,7 @@ package org.obridge.query;
 
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.Test;
-import org.obridge.query.util.JsonList;
+import org.obridge.query.util.JsonCollection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +25,7 @@ public class AutoObjectTest {
 
         final List<SimpleTestService.Properties> list = new AutoObject<>(SimpleTestService.Properties.class, preparedStatement.executeQuery()).getList();
 
-        System.out.println(new JsonList(list).toJson());
+        System.out.println(new JsonCollection(list).toJson());
 
     }
 }

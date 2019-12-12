@@ -1,10 +1,9 @@
 package org.obridge.query;
 
 import org.obridge.query.interfaces.JsonString;
-import org.obridge.query.util.JsonList;
+import org.obridge.query.util.JsonCollection;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ class MethodMapBasedInterfaceInvocationHandler implements InvocationHandler {
     public String jsonValue(Object o) {
 
         if (o instanceof List) {
-            return new JsonList((List<? extends JsonString>) o).toJson();
+            return new JsonCollection((List<? extends JsonString>) o).toJson();
         } else {
             return "\"" + o.toString() + "\"";
         }
