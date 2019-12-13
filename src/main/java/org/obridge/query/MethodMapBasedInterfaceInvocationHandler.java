@@ -29,8 +29,7 @@ class MethodMapBasedInterfaceInvocationHandler implements InvocationHandler {
 
     public static String jsonValue(Object o) {
 
-        if (o.getClass()
-             .isAssignableFrom(Collection.class)) {
+        if (Collection.class.isAssignableFrom(o.getClass())) {
             return new JsonCollection<>((Collection<? extends JsonString>) o).toJson();
         } else {
             return "\"" + o.toString() + "\"";
