@@ -1,4 +1,6 @@
-package org.obridge.query.conversion;
+package org.obridge.query.conversion.converters;
+
+import org.obridge.query.conversion.Converter;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;

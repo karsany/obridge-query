@@ -1,7 +1,7 @@
 package org.obridge.query;
 
 import org.obridge.query.conversion.Converters;
-import org.obridge.query.conversion.StringPatternToLocalDateConverter;
+import org.obridge.query.conversion.converters.StringPatternToLocalDateConverter;
 import oracle.jdbc.pool.OracleDataSource;
 import org.json.JSONObject;
 import org.junit.Assert;

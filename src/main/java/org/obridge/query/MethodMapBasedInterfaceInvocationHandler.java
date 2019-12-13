@@ -43,23 +43,23 @@ class MethodMapBasedInterfaceInvocationHandler implements InvocationHandler {
         if (method.getName()
                   .equals("toString")) {
             return this.map.entrySet()
-                      .stream()
-                      .map(e -> e.getKey()
-                                 .getName()
-                              + " = " + e.getValue()
-                                         .toString())
-                      .collect(Collectors.toList())
-                      .toString();
+                           .stream()
+                           .map(e -> e.getKey()
+                                      .getName()
+                                   + " = " + e.getValue()
+                                              .toString())
+                           .collect(Collectors.toList())
+                           .toString();
         }
 
         if (method.getName()
                   .equals("toJson")) {
             return "{" + this.map.entrySet()
-                            .stream()
-                            .map(e -> "\"" + MethodMapBasedInterfaceInvocationHandler.jsonKey(e.getKey()
-                                                      .getName())
-                                    + "\": " + MethodMapBasedInterfaceInvocationHandler.jsonValue(e.getValue()))
-                            .collect(Collectors.joining(","))
+                                 .stream()
+                                 .map(e -> "\"" + MethodMapBasedInterfaceInvocationHandler.jsonKey(e.getKey()
+                                                                                                    .getName())
+                                         + "\": " + MethodMapBasedInterfaceInvocationHandler.jsonValue(e.getValue()))
+                                 .collect(Collectors.joining(","))
                     + "}";
         }
 

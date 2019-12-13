@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.obridge.query.conversion.ConverterNotFoundException;
 import org.obridge.query.conversion.Converters;
+import org.obridge.query.conversion.exception.ConverterNotFoundException;
 
 class ResultSetRowMapper<T> {
     private final Class<T> clazz;
@@ -57,10 +57,7 @@ class ResultSetRowMapper<T> {
                 }
             }
 
-            methodMap
-                     .put(
-                          key,
-                          value);
+            methodMap.put(key, value);
         }
 
         return (T) Proxy.newProxyInstance(this.getClass()
