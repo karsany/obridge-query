@@ -24,13 +24,10 @@
 
 package org.obridge.query.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 public final class StringHelper {
 
     private StringHelper() {
     }
-
 
     public static String toOracleName(String s) {
         StringBuilder result = new StringBuilder();
@@ -38,15 +35,25 @@ public final class StringHelper {
         if (s != null && !s.isEmpty()) {
             for (int i = 0; i < s.length(); i++) {
                 currChar = s.substring(i, i + 1);
-                if (i != 0 && StringUtils.isAllUpperCase(currChar)) {
-                    result.append("_" + currChar);
+                if (i != 0 && isAllUpperCase(currChar)) {
+                    result.append("_")
+                          .append(currChar);
                 } else {
                     result.append(currChar);
                 }
             }
         }
-        return result.toString().toUpperCase().replaceAll("\\_\\_", "_");
+        return result.toString()
+                     .toUpperCase()
+                     .replaceAll("\\_\\_", "_");
     }
 
+    public static boolean isAllUpperCase(String str) {
+        return str != null
+                && !str.trim()
+                       .isEmpty()
+                && str.chars()
+                      .allMatch(Character::isUpperCase);
+    }
 
 }
