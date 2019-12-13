@@ -14,13 +14,16 @@ public final class Converters {
         Converters.register(new TimestampToLocalDateConverter());
     }
 
-    public static void register(Converter converter) {
+    private Converters() {
+    }
+
+    public static void register(Converter<?, ?> converter) {
 
         final FromTo key = new FromTo(
-                                      (Class) ((ParameterizedType) converter.getClass()
-                                                                            .getGenericInterfaces()[0]).getActualTypeArguments()[0],
-                                      (Class) ((ParameterizedType) converter.getClass()
-                                                                            .getGenericInterfaces()[0]).getActualTypeArguments()[1]);
+                                      (Class<?>) ((ParameterizedType) converter.getClass()
+                                                                               .getGenericInterfaces()[0]).getActualTypeArguments()[0],
+                                      (Class<?>) ((ParameterizedType) converter.getClass()
+                                                                               .getGenericInterfaces()[0]).getActualTypeArguments()[1]);
         System.out.println("Registered converter: " + key);
         converters.put(key, converter);
     }
@@ -42,10 +45,10 @@ public final class Converters {
     }
 
     private static class FromTo {
-        private final Class from;
-        private final Class to;
+        private final Class<?> from;
+        private final Class<?> to;
 
-        public FromTo(Class from, Class to) {
+        public FromTo(Class<?> from, Class<?> to) {
             this.from = from;
             this.to = to;
         }
