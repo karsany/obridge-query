@@ -15,32 +15,26 @@ public class AutoObject<T> {
     private List<T> list = null;
     private Set<String> columnNames = new LinkedHashSet<>();
     private Map<Method, String> methodColumnNameMap = new LinkedHashMap<>();
-
+    private ResultSetRowMapper<T> resultSetRowMapper;
 
     public AutoObject(Class<T> clazz, ResultSet resultSet) {
         this.clazz = clazz;
         this.resultSet = resultSet;
+        this.resultSetRowMapper = new ResultSetRowMapper<>(this.clazz);
     }
 
     public List<T> getList() {
-
         try {
+            if (this.list == null) {
+                this.initColumnNameSet();
+                this.mapMethodsToColumnNames();
+                this.list = new ArrayList<>();
 
-            if (list == null) {
-
-                initColumnNameSet();
-                mapMethodsToColumnNames();
-                list = new ArrayList<>();
-
-                while (resultSet.next()) {
-
-                    T row = new ResultSetRowMapper<T>(clazz).getObject(methodColumnNameMap, resultSet);
-
+                while (this.resultSet.next()) {
+                    T row = this.resultSetRowMapper.getObject(this.methodColumnNameMap, this.resultSet);
                     this.list.add(row);
-
                 }
             }
-
             return this.list;
         } catch (SQLException e) {
             this.list = null;
