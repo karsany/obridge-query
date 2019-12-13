@@ -10,27 +10,34 @@ public final class Converters {
     static Map<FromTo, Converter> converters = new HashMap<>();
 
     static {
-        Converters.register(new BigDecimalToIntegerConverter());
-        Converters.register(new LongToIntegerConverter());
+        Converters.register(new NumberToIntegerConverter());
         Converters.register(new TimestampToLocalDateConverter());
     }
 
     public static void register(Converter converter) {
 
         final FromTo key = new FromTo(
-                (Class) ((ParameterizedType) converter.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[0],
-                (Class) ((ParameterizedType) converter.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[1]
-        );
+                                      (Class) ((ParameterizedType) converter.getClass()
+                                                                            .getGenericInterfaces()[0]).getActualTypeArguments()[0],
+                                      (Class) ((ParameterizedType) converter.getClass()
+                                                                            .getGenericInterfaces()[0]).getActualTypeArguments()[1]);
         System.out.println("Registered converter: " + key);
         converters.put(key, converter);
     }
 
+    @SuppressWarnings("unchecked")
     public static <F, T> Converter<F, T> getConverter(Class<F> from, Class<T> to) throws ConverterNotFoundException {
         final FromTo fromTo = new FromTo(from, to);
         if (converters.containsKey(fromTo)) {
             return converters.get(fromTo);
         } else {
-            throw new ConverterNotFoundException("Converter not found: " + fromTo);
+            return converters.entrySet()
+                             .stream()
+                             .filter(entry -> entry.getKey().from.isAssignableFrom(from)
+                                     && to.equals(entry.getKey().to))
+                             .map(Map.Entry::getValue)
+                             .findFirst()
+                             .orElseThrow(() -> new ConverterNotFoundException("Converter not found: " + fromTo));
         }
     }
 
@@ -45,21 +52,25 @@ public final class Converters {
 
         @Override
         public String toString() {
-            return "from = " + from + " to = " + to;
+            return "from = " + this.from + " to = " + this.to;
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+            if (o == null || this.getClass() != o.getClass()) {
+                return false;
+            }
             FromTo fromTo = (FromTo) o;
-            return from.equals(fromTo.from) &&
-                    to.equals(fromTo.to);
+            return this.from.equals(fromTo.from) &&
+                    this.to.equals(fromTo.to);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(from, to);
+            return Objects.hash(this.from, this.to);
         }
     }
 
