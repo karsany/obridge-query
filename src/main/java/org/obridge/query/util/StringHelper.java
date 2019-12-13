@@ -56,4 +56,14 @@ public final class StringHelper {
                       .allMatch(Character::isUpperCase);
     }
 
+    public static String capitalize(String str) {
+        if (str == null || str.trim()
+                              .isEmpty()) {
+            return "";
+        }
+        return str.substring(0, 1)
+                  .toUpperCase()
+                  .concat(str.substring(1));
+    }
+
 }
