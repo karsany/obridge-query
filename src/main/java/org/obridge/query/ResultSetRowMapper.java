@@ -1,8 +1,5 @@
 package org.obridge.query;
 
-import org.obridge.query.conversion.ConverterNotFoundException;
-import org.obridge.query.conversion.Converters;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
@@ -12,6 +9,9 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.obridge.query.conversion.ConverterNotFoundException;
+import org.obridge.query.conversion.Converters;
+
 class ResultSetRowMapper<T> {
     private final Class<T> clazz;
 
@@ -19,6 +19,7 @@ class ResultSetRowMapper<T> {
         this.clazz = clazz;
     }
 
+    @SuppressWarnings("unchecked")
     public T getObject(Map<Method, String> methodColumnNameMap, ResultSet resultSet) throws SQLException {
 
         Map<Method, Object> methodMap = new LinkedHashMap<>();
@@ -27,9 +28,11 @@ class ResultSetRowMapper<T> {
             final Method key = metCol.getKey();
             Object value = resultSet.getObject(metCol.getValue());
 
-            if (value.getClass().equals(key.getReturnType())) {
+            if (value.getClass()
+                     .equals(key.getReturnType())) {
                 // nothing to do
-            } else if (key.getReturnType().isInstance(value)) {
+            } else if (key.getReturnType()
+                          .isInstance(value)) {
                 // nothing to do
             } else if (value instanceof ResultSet) {
 
@@ -42,9 +45,11 @@ class ResultSetRowMapper<T> {
             } else {
                 // convert
                 try {
-                    value = Converters.getConverter(value.getClass(), (Class) key.getGenericReturnType()).convert(value);
+                    value = Converters.getConverter(value.getClass(), (Class) key.getGenericReturnType())
+                                      .convert(value);
                 } catch (ConverterNotFoundException e) {
-                    if (key.getReturnType().equals(String.class)) {
+                    if (key.getReturnType()
+                           .equals(String.class)) {
                         value = value.toString();
                     } else {
                         throw new RuntimeException(e);
@@ -53,20 +58,15 @@ class ResultSetRowMapper<T> {
             }
 
             methodMap
-                    .put(
-                            key,
-                            value
-                    );
+                     .put(
+                          key,
+                          value);
         }
 
-        final T t =
-                (T) Proxy
-                        .newProxyInstance(
-                                this.getClass().getClassLoader(),
-                                new Class[]{clazz},
-                                new MethodMapBasedInterfaceInvocationHandler(methodMap)
-                        );
+        return (T) Proxy.newProxyInstance(this.getClass()
+                                              .getClassLoader(),
+                                          new Class[] { this.clazz },
+                                          new MethodMapBasedInterfaceInvocationHandler(methodMap));
 
-        return t;
     }
 }

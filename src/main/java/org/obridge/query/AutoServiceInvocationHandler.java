@@ -1,22 +1,21 @@
 package org.obridge.query;
 
-import org.obridge.query.annotation.Bind;
-import org.obridge.query.annotation.QuerySource;
-import org.obridge.query.util.NamedParameterStatement;
-
-import javax.sql.DataSource;
 import java.lang.reflect.*;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.obridge.query.annotation.Bind;
+import org.obridge.query.annotation.QuerySource;
+import org.obridge.query.util.NamedParameterStatement;
+
 class AutoServiceInvocationHandler implements InvocationHandler {
 
     private final DataSource ds;
-    private final Class clazz;
 
-    public AutoServiceInvocationHandler(DataSource ds, Class clazz) {
+    public AutoServiceInvocationHandler(DataSource ds) {
         this.ds = ds;
-        this.clazz = clazz;
     }
 
     @Override
@@ -28,25 +27,26 @@ class AutoServiceInvocationHandler implements InvocationHandler {
         if (annotation == null) {
             query = new ResourceFileQuery().sql(method);
         } else {
-            query = annotation.value().newInstance().sql(method);
+            query = annotation.value()
+                              .newInstance()
+                              .sql(method);
         }
 
         boolean isList;
 
-        Class c;
+        Class<?> c;
         final Class<?> returnType = method.getReturnType();
 
         if (returnType.equals(List.class)) {
             final Type genericReturnType = method.getGenericReturnType();
-            c = (Class) ((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
+            c = (Class<?>) ((ParameterizedType) genericReturnType).getActualTypeArguments()[0];
             isList = true;
         } else {
             c = returnType;
             isList = false;
         }
 
-
-        try (Connection conn = ds.getConnection()) {
+        try (Connection conn = this.ds.getConnection()) {
 
             final NamedParameterStatement namedParameterStatement = new NamedParameterStatement(conn, query);
 
@@ -58,9 +58,15 @@ class AutoServiceInvocationHandler implements InvocationHandler {
                 i++;
             }
 
+            final List<?> list = new AutoObject<>(c, namedParameterStatement.executeQuery()).getList();
 
-            final List list = new AutoObject<>(c, namedParameterStatement.executeQuery()).getList();
-            return isList ? list : (list.size() > 0 ? list.get(0) : null);
+            if (isList) {
+                return list;
+            } else if (list != null && !list.isEmpty()) {
+                return list.get(0);
+            } else {
+                return null;
+            }
         }
     }
 }

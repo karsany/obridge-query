@@ -1,11 +1,11 @@
 package org.obridge.query;
 
-import org.obridge.query.util.StringHelper;
-
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
+import org.obridge.query.util.StringHelper;
 
 public class AutoObject<T> {
 
@@ -42,58 +42,60 @@ public class AutoObject<T> {
         }
     }
 
-    private void mapMethodsToColumnNames() throws SQLException {
+    private void mapMethodsToColumnNames() {
         this.methodColumnNameMap.clear();
 
         for (Method method : this.clazz.getMethods()) {
 
             String calColName = method.getName();
 
-            if (columnNames.contains(calColName)) {
-                methodColumnNameMap.put(method, calColName);
+            if (this.columnNames.contains(calColName)) {
+                this.methodColumnNameMap.put(method, calColName);
             }
 
             calColName = calColName.toUpperCase();
-            if (columnNames.contains(calColName)) {
-                methodColumnNameMap.put(method, calColName);
+            if (this.columnNames.contains(calColName)) {
+                this.methodColumnNameMap.put(method, calColName);
             }
 
             calColName = StringHelper.toOracleName(method.getName());
-            if (columnNames.contains(calColName)) {
-                methodColumnNameMap.put(method, calColName);
+            if (this.columnNames.contains(calColName)) {
+                this.methodColumnNameMap.put(method, calColName);
             }
 
-            if (method.getName().startsWith("get")) {
-                calColName = method.getName().substring(3);
-                if (columnNames.contains(calColName)) {
-                    methodColumnNameMap.put(method, calColName);
+            if (method.getName()
+                      .startsWith("get")) {
+                calColName = method.getName()
+                                   .substring(3);
+                if (this.columnNames.contains(calColName)) {
+                    this.methodColumnNameMap.put(method, calColName);
                 }
 
                 calColName = calColName.toUpperCase();
-                if (columnNames.contains(calColName)) {
-                    methodColumnNameMap.put(method, calColName);
+                if (this.columnNames.contains(calColName)) {
+                    this.methodColumnNameMap.put(method, calColName);
                 }
 
-                calColName = StringHelper.toOracleName(method.getName().substring(3));
-                if (columnNames.contains(calColName)) {
-                    methodColumnNameMap.put(method, calColName);
+                calColName = StringHelper.toOracleName(method.getName()
+                                                             .substring(3));
+                if (this.columnNames.contains(calColName)) {
+                    this.methodColumnNameMap.put(method, calColName);
                 }
 
             }
 
         }
-
 
     }
 
     private void initColumnNameSet() throws SQLException {
-
         this.columnNames.clear();
 
-        for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-            columnNames.add(resultSet.getMetaData().getColumnLabel(i));
+        for (int i = 1; i <= this.resultSet.getMetaData()
+                                           .getColumnCount(); i++) {
+            this.columnNames.add(this.resultSet.getMetaData()
+                                               .getColumnLabel(i));
         }
 
-        
     }
 }
