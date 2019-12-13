@@ -1,10 +1,14 @@
 package org.obridge.query;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 
 import org.obridge.query.interfaces.Query;
-
-import java.lang.reflect.Method;
-import java.util.Scanner;
+import org.obridge.query.util.StringHelper;
 
 public class ResourceFileQuery implements Query {
 
@@ -14,9 +18,17 @@ public class ResourceFileQuery implements Query {
     }
 
     @Override
-    public String sql(Method m) {
-        String sqlFileName = m.getDeclaringClass().getSimpleName() + "_" + m.getName().substring(0, 1).toUpperCase() + m.getName().substring(1) + ".sql";
-        return new Scanner(m.getDeclaringClass().getResourceAsStream(sqlFileName), "UTF-8").useDelimiter("\\A").next();
+    public String sql(Method m) throws IOException {
+        String sqlFileName = m.getDeclaringClass()
+                              .getSimpleName()
+                + "_" + StringHelper.capitalize(m.getName()) + ".sql";
+
+        try (BufferedReader bfr = new BufferedReader((new InputStreamReader(m.getDeclaringClass()
+                                                                             .getResourceAsStream(sqlFileName),
+                                                                            StandardCharsets.UTF_8)))) {
+            return bfr.lines()
+                      .collect(Collectors.joining(System.lineSeparator()));
+        }
     }
 
 }

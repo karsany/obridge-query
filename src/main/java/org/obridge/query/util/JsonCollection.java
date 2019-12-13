@@ -1,10 +1,10 @@
 package org.obridge.query.util;
 
-import org.obridge.query.interfaces.JsonString;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
+
+import org.obridge.query.interfaces.JsonString;
 
 public class JsonCollection<E extends JsonString> implements JsonString, Collection<E> {
 
@@ -22,82 +22,86 @@ public class JsonCollection<E extends JsonString> implements JsonString, Collect
         this.name = null;
     }
 
-
     @Override
     public String toJson() {
-        if (name == null) {
+        if (this.name == null || this.name.trim()
+                                          .isEmpty()) {
             return "[" +
-                    collection.stream().map(o -> ((JsonString) o).toJson()).collect(Collectors.joining(", "))
+                    this.collection.stream()
+                                   .map(JsonString::toJson)
+                                   .collect(Collectors.joining(", "))
                     + "]";
         } else {
-            return "{ \"" + name + "\": " + "[" +
-                    collection.stream().map(o -> ((JsonString) o).toJson()).collect(Collectors.joining(", "))
+            return "{ \"" + this.name + "\": " + "[" +
+                    this.collection.stream()
+                                   .map(JsonString::toJson)
+                                   .collect(Collectors.joining(", "))
                     + "] }";
         }
     }
 
     @Override
     public int size() {
-        return collection.size();
+        return this.collection.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return collection.isEmpty();
+        return this.collection.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return collection.contains(o);
+        return this.collection.contains(o);
     }
 
     @Override
     public Iterator<E> iterator() {
-        return collection.iterator();
+        return this.collection.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return collection.toArray();
+        return this.collection.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return collection.toArray(a);
+        return this.collection.toArray(a);
     }
 
     @Override
     public boolean add(E e) {
-        return collection.add(e);
+        return this.collection.add(e);
     }
 
     @Override
     public boolean remove(Object o) {
-        return collection.remove(o);
+        return this.collection.remove(o);
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return collection.containsAll(c);
+        return this.collection.containsAll(c);
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return collection.addAll(c);
+        return this.collection.addAll(c);
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return collection.removeAll(c);
+        return this.collection.removeAll(c);
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return collection.retainAll(c);
+        return this.collection.retainAll(c);
     }
 
     @Override
     public void clear() {
-        collection.clear();
+        this.collection.clear();
     }
 }
