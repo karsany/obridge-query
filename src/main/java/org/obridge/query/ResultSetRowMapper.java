@@ -42,7 +42,7 @@ class ResultSetRowMapper<T> {
             } else {
                 // convert
                 try {
-                    value = Converters.getConverter(value.getClass(), (Class) key.getGenericReturnType()).valueOf(value);
+                    value = Converters.getConverter(value.getClass(), (Class) key.getGenericReturnType()).convert(value);
                 } catch (ConverterNotFoundException e) {
                     if (key.getReturnType().equals(String.class)) {
                         value = value.toString();

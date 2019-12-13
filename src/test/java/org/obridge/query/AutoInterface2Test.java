@@ -17,7 +17,7 @@ public class AutoInterface2Test {
         Converters.register(new Converter<CLOB, String>() {
 
             @Override
-            public String valueOf(CLOB from) {
+            public String convert(CLOB from) {
                 try {
                     return from.stringValue();
                 } catch (SQLException e) {
@@ -28,7 +28,7 @@ public class AutoInterface2Test {
 
         Converters.register(new Converter<Timestamp, Date>() {
             @Override
-            public Date valueOf(Timestamp from) {
+            public Date convert(Timestamp from) {
                 return Date.valueOf(from.toLocalDateTime().toLocalDate());
             }
         });
@@ -36,7 +36,7 @@ public class AutoInterface2Test {
 
         Converters.register(new Converter<Timestamp, LocalDateTime>() {
             @Override
-            public LocalDateTime valueOf(Timestamp from) {
+            public LocalDateTime convert(Timestamp from) {
                 return from.toLocalDateTime();
             }
         });

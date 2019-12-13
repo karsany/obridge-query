@@ -11,7 +11,7 @@ public class StringPatternToLocalDateConverter implements Converter<String, Loca
     }
 
     @Override
-    public LocalDate valueOf(String from) {
+    public LocalDate convert(String from) {
         return LocalDate.parse(from, DateTimeFormatter.ofPattern(pattern));
     }
 }

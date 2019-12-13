@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class TimestampToLocalDateConverter implements Converter<Timestamp, LocalDate> {
     @Override
-    public LocalDate valueOf(Timestamp from) {
+    public LocalDate convert(Timestamp from) {
         return from.toLocalDateTime().toLocalDate();
     }
 }
