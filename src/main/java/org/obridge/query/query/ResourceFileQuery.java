@@ -1,4 +1,4 @@
-package org.obridge.query;
+package org.obridge.query.query;
 
 import java.io.BufferedReader;
 import java.io.IOException;

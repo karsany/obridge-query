@@ -3,6 +3,7 @@ package org.obridge.query;
 import org.obridge.query.annotation.Bind;
 import org.obridge.query.annotation.QuerySource;
 import org.obridge.query.interfaces.JsonString;
+import org.obridge.query.query.ResourceFileQuery;
 
 import java.time.LocalDate;
 import java.util.List;

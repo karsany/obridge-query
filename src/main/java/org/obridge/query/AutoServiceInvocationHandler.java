@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.obridge.query.annotation.Bind;
 import org.obridge.query.annotation.QuerySource;
+import org.obridge.query.query.ResourceFileQuery;
 import org.obridge.query.util.NamedParameterStatement;
 
 class AutoServiceInvocationHandler implements InvocationHandler {
