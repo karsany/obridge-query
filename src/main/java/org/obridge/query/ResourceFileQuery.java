@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
+import org.obridge.query.exception.QueryException;
 import org.obridge.query.interfaces.Query;
 import org.obridge.query.util.StringHelper;
 
@@ -18,7 +19,7 @@ public class ResourceFileQuery implements Query {
     }
 
     @Override
-    public String sql(Method m) throws IOException {
+    public String sql(Method m) {
         String sqlFileName = m.getDeclaringClass()
                               .getSimpleName()
                 + "_" + StringHelper.capitalize(m.getName()) + ".sql";
@@ -28,6 +29,8 @@ public class ResourceFileQuery implements Query {
                                                                             StandardCharsets.UTF_8)))) {
             return bfr.lines()
                       .collect(Collectors.joining(System.lineSeparator()));
+        } catch (IOException e) {
+            throw new QueryException(e);
         }
     }
 

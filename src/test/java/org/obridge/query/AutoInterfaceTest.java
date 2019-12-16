@@ -4,7 +4,7 @@ import oracle.jdbc.pool.OracleDataSource;
 import org.junit.Assert;
 import org.junit.Test;
 import org.obridge.query.conversion.Converters;
-import org.obridge.query.conversion.StringPatternToLocalDateConverter;
+import org.obridge.query.conversion.converters.StringPatternToLocalDateConverter;
 import org.obridge.query.interfaces.JsonString;
 
 import java.sql.*;

@@ -1,9 +1,14 @@
 package org.obridge.query.conversion;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import org.obridge.query.conversion.converters.NumberToIntegerConverter;
+import org.obridge.query.conversion.converters.TimestampToLocalDateConverter;
+import org.obridge.query.conversion.exception.ConverterNotFoundException;
 
 public final class Converters {
 
@@ -18,12 +23,11 @@ public final class Converters {
     }
 
     public static void register(Converter<?, ?> converter) {
+        final Type[] actualTypeParams = ((ParameterizedType) converter.getClass()
+                                                                      .getGenericInterfaces()[0]).getActualTypeArguments();
 
-        final FromTo key = new FromTo(
-                                      (Class<?>) ((ParameterizedType) converter.getClass()
-                                                                               .getGenericInterfaces()[0]).getActualTypeArguments()[0],
-                                      (Class<?>) ((ParameterizedType) converter.getClass()
-                                                                               .getGenericInterfaces()[0]).getActualTypeArguments()[1]);
+        final FromTo key = new FromTo((Class<?>) actualTypeParams[0], (Class<?>) actualTypeParams[1]);
+
         System.out.println("Registered converter: " + key);
         converters.put(key, converter);
     }

@@ -1,4 +1,6 @@
-package org.obridge.query.conversion;
+package org.obridge.query.conversion.converters;
+
+import org.obridge.query.conversion.Converter;
 
 public class NumberToIntegerConverter implements Converter<Number, Integer> {
     @Override
