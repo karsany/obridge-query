@@ -7,6 +7,6 @@ public interface Query {
 
     String sql();
 
-    String sql(Method m) throws IOException;
+    String sql(Method m);
 
 }
