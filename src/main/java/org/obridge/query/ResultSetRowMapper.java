@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.obridge.query.conversion.Converters;
 import org.obridge.query.conversion.exception.ConverterNotFoundException;
+import org.obridge.query.exception.MappingException;
 
 class ResultSetRowMapper<T> {
     private final Class<T> clazz;
@@ -52,7 +53,7 @@ class ResultSetRowMapper<T> {
                            .equals(String.class)) {
                         value = value.toString();
                     } else {
-                        throw new RuntimeException(e);
+                        throw new MappingException(e);
                     }
                 }
             }

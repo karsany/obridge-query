@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
+import org.obridge.query.exception.QueryException;
 import org.obridge.query.interfaces.Query;
 import org.obridge.query.util.StringHelper;
 
